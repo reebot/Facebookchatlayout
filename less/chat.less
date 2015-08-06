@@ -1,0 +1,441 @@
+// Base font size
+@fontSize: 13px;
+
+@primaryChatColor: #2574A9;
+@secondaryChatColor: #EAEDF1;
+@tertiaryChatColor: #D3D7DC;
+@tertiaryShadeChatColor: #95A5A6;
+
+@chatSidebarWidth: 235px;
+@chatTabWidth: 215px;
+@chatTabActiveWidth: 300px;
+
+@avatarSize: 35px;
+
+@chatTabBodyHeight: 220px;
+@chatTabHeaderHeight: 35px;
+@chatTabFooterHeight: 30px;
+@chatUsersListTabMinHeight: 400px;
+@chatUsersListTabMaxHeight: 400px;
+
+// If you have defined padding on footer you must add it here because when tab's body's height is 100% on larger screen; a negative margin is to be applied
+@chatTabFooterVerticalPadding: 10px;
+
+// Some text messages to show when user list or message list is empty
+@noMessagesText: "No messages to show.";
+@noUsersText: "No users to show.";
+
+// The background colors of chat bubbles
+@chatMyMessageBubbleColor: #ffffff;
+@chatTheirMessageBubbleColor: #ffffff;
+
+div#chat-container {
+	/* Base font size */
+	font-size: @fontSize;
+
+	/* Inline Block across all browsers */
+	display: inline-block;
+	zoom:1;
+	*display:inline;
+
+	/* Stick to the right bottom */
+	position: fixed;
+	right: 0;
+	bottom: 0;
+
+	padding: 0 15px;
+
+	/* No pointer events as it may cover whole screen */
+	pointer-events: none;
+
+	z-index: 9999;
+
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.pull-left {
+		float: left;
+	}
+	.pull-right {
+		float: right;
+	}
+	.form-control {
+		border: 0;
+		box-sizing: border-box;
+		height: @chatTabFooterHeight;
+		outline: 0;
+		overflow: hidden;
+		resize: none;
+		width: 100%;
+		font-size: @fontSize;
+	}
+	img.avatar {
+		width: @avatarSize;
+		height: @avatarSize;
+	}
+	.clearfix:before,
+	.clearfix:after {
+		content:"";
+		display:table;
+	}
+	.clearfix:after {
+		clear:both;
+	}
+	.clearfix {
+		zoom:1;
+	}
+
+	div#tab-scroller {
+		width: auto;
+		display: inline-block;
+		
+		/* Absolute positioned so, it doesn't mess with the tabs */
+		position: absolute;
+		left: -20px;
+		bottom: -2px;
+
+		border: 1px solid @tertiaryChatColor;
+
+		/* We don't want to inherit properties */
+		pointer-events: auto;
+		
+		z-index: 9999;
+
+		&.active { 
+			div.tab-header {
+				background-color: white;
+			}
+		}
+		&.active {
+			ul.dropdown {
+				display: block;
+			}
+		}
+		div.tab-header {
+			background-color: @secondaryChatColor;
+			color: black;
+			cursor: pointer;
+
+			/* Vertical centering of text in the header */
+			height: @chatTabHeaderHeight;
+			line-height: @chatTabHeaderHeight;
+
+			padding: 0 10px;
+		}
+		ul.dropdown {
+			background-color: white;
+			border: 1px solid @tertiaryChatColor;
+			bottom: 35px;
+			display: none;
+			left: -1px;
+			padding: 10px 0;
+			position: absolute;
+			width: 150px;
+			z-index: 9999;
+
+			li {
+				cursor: pointer;
+				padding: 5px 10px;
+
+				&:hover {
+					background-color: @primaryChatColor;
+					color: white;
+				}
+			}
+		}
+	}
+
+	ul#tabs {
+		/* We want to render tabs from right to left */
+		direction: rtl;
+
+		/* We don't want to inherit properties */
+		pointer-events: auto;
+
+		/* We don't want the children to stack weirdly when browser width is small */
+		white-space: nowrap;
+		width:100%;
+
+		li.tab {
+			width: @chatTabWidth;
+			position: relative;
+			border: 1px solid @tertiaryChatColor;
+			margin-left: 10px;
+
+
+
+			/* We don't want to inherit properties */
+			direction: ltr;
+			white-space: normal;
+
+			/* Inline Block across all browsers */
+			display: inline-block;
+			zoom:1;
+			*display:inline;
+
+			/* direction property in the parent messes with the text so, we need to force the text on the left */
+			text-align: left;
+
+			/* Stick to the bottom no matter what */
+			vertical-align: bottom;
+
+			&.active {
+				width: @chatTabActiveWidth;
+				div.tab-header {
+					background-color: @primaryChatColor;
+					color: white;
+					margin: -1px -1px 0 -1px;
+				}
+				div.tab-body {
+					display: block;
+				}
+				div.tab-footer {
+					display: block;
+				}
+			}
+
+			div.tab-header {
+				background-color: @secondaryChatColor;
+				color: black;
+				cursor: pointer;
+
+				/* Vertical Centering text in the header */
+				height: @chatTabHeaderHeight;
+				line-height: @chatTabHeaderHeight;
+
+				padding: 0 10px;
+			}
+			div.tab-body {
+				background-color: @secondaryChatColor;
+				padding: 10px;
+				height: @chatTabBodyHeight;
+				border-bottom: 1px solid @tertiaryChatColor;
+
+				/* Hidden by default. Show when li.tab has the class active */
+				display: none;
+
+				/* Have a scrollbar */
+				overflow-y: scroll;
+
+				/* IE7 needs this property */
+				position: relative;
+
+				ul.messages {
+					&:empty {
+						text-align: center;
+					}
+					&:empty:before {
+						content: @noMessagesText;
+						display: inline-block;
+						padding: 5px  0 0 0;
+						color: @tertiaryShadeChatColor;
+						font-weight: bold;
+					}
+					li.message {
+						padding: 5px 0;
+						position: relative;
+
+						img {
+							position: absolute;
+						}
+						div.bubble {
+							padding: 10px;
+							position: relative;
+							&:before {
+								/* New technique for triangles. Forget borders. */
+								transform: rotate(45deg);
+								content:"\00a0";
+								display: block;
+								height: 12px;
+								position: absolute;
+								top: 12px;
+								width: 12px;
+							}
+							p {
+								margin: 0;
+							}
+							p:not(:last-child) {
+								margin-bottom: 7px;
+							}
+						}
+						&.me {
+							img.avatar {
+								left: 0;
+							}
+							div.bubble {
+								/* Float left when the li.message has me class */
+								float: left;
+								margin: 0 0 0 (@avatarSize + 15px);
+								background-color: @chatMyMessageBubbleColor;
+
+								&:before {
+									left: -6px;
+									background-color: @chatMyMessageBubbleColor;
+								}
+							}
+						}
+						&.you {
+							img.avatar {
+								right: 0;
+							}
+							div.bubble {
+								/* Float right when the li.message has you class */
+								float: right;
+								margin: 0 (@avatarSize + 15px) 0 0;
+								background-color: @chatTheirMessageBubbleColor;
+
+								&:before {
+									right: -6px;
+									background-color: @chatTheirMessageBubbleColor;
+								}
+							}
+						}
+					}
+					li.date {
+						padding: 10px 0;
+						position: relative;
+						text-align: center;
+						color: @tertiaryShadeChatColor;
+					}
+				}
+				div.message-information {
+					padding: 10px 0;
+					color: @tertiaryShadeChatColor;
+				}
+			}
+			div.tab-footer {
+				background-color: white;
+				display: none;
+				height: @chatTabFooterHeight;
+				padding: 5px 10px;
+			}
+			&.users-list-tab.active {
+				width: @chatTabWidth;
+			}
+			&.users-list-tab {
+				transition: width .5s ease;
+				transition-delay: .5s;
+
+				div.tab-body {
+					background-color: white;
+					max-height: @chatUsersListTabMinHeight;
+					min-height: @chatUsersListTabMaxHeight;
+					padding: 0;
+
+					ul.users-list {
+						white-space: nowrap;
+						&:empty {
+							text-align: center;
+						}
+						&:empty:before {
+							content: @noUsersText;
+							display: inline-block;
+							padding: 5px  0 0 0;
+							color: @tertiaryShadeChatColor;
+							font-weight: bold;
+						}
+						li {
+							cursor: pointer;
+							height: @avatarSize;
+							line-height: @avatarSize;
+							padding: 5px 15px;
+							position: relative;
+							&:hover {
+								background-color: @secondaryChatColor;
+							}
+							&.active:before {
+								content: '';
+								width: 5px;
+								height: 5px;
+								background-color: @primaryChatColor;
+								position: absolute;
+								bottom: 5px;
+								left: 15px;
+								border: 2px solid white;
+							}
+							img {
+								float: left;
+								margin-right: 15px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+@media all and (min-width: 1170px) and (max-width: 1280px) {
+	div#chat-container.sidebar {
+		height: 100%;
+		padding-right: 0;
+		margin-right: -1px;
+		ul#tabs {
+			height: 100%;
+			li.tab.users-list-tab {
+				height: 100%;
+				width: 65px;
+
+				&:hover {
+					width: @chatTabWidth;
+
+					div.tab-body {
+						/* When the tab's body is 100% the footer becomes invisible. The below properties are to fix it */
+						margin-top: 0 - (@chatTabFooterHeight + @chatTabFooterVerticalPadding);
+						padding-top: @chatTabFooterHeight + @chatTabFooterVerticalPadding;
+						box-sizing: border-box;
+					}
+					div.tab-footer {
+						display: block !important;
+					}
+				}
+
+				div.tab-header {
+					display: none;
+				}
+				div.tab-body {
+					display: block !important;
+					height: 100% !important;
+					min-height: 100% !important;
+					max-height: 100% !important;
+					overflow: hidden;
+					&:hover {
+						overflow-y: scroll;
+					}
+				}
+			}
+		}
+	}
+}
+@media all and (min-width: 1280px) {
+	div#chat-container.sidebar {
+		height: 100%;
+		padding-right: 0;
+		margin-right: -1px;
+		ul#tabs {
+			height: 100%;
+			li.tab.users-list-tab {
+				height: 100%;
+
+				div.tab-header {
+					display: none;
+				}
+				div.tab-body {
+					display: block !important;
+					height: 100% !important;
+					min-height: 100% !important;
+					max-height: 100% !important;
+					
+					/* When the tab's body is 100% the footer becomes invisible. The below properties are to fix it */
+					margin-top: 0 - (@chatTabFooterHeight + @chatTabFooterVerticalPadding);
+					padding-top: @chatTabFooterHeight + @chatTabFooterVerticalPadding;
+					box-sizing: border-box;
+				}
+				div.tab-footer {
+					display: block !important;
+				}
+			}
+		}
+	}
+}

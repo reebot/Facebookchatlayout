@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS Chat Layout</title>
+
+	<link rel="stylesheet" href="css/normalize.min.css">
+	<link rel="stylesheet" href="css/chat.css">
+	<link rel="stylesheet" href="css/chat-theme.css">
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="css/chat-ie.css">
+	<![endif]-->
+</head>
+<body>
+
+	<!-- BEGIN CHAT -->
+	<div id="chat-container" class="sidebar">
+		<div id="tab-scroller">
+			<div class="tab-header">1</div>
+			<ul class="dropdown">
+				<li>Tommy Vercetti</li>
+			</ul>
+		</div>
+		<ul id="tabs">
+			<li class="tab users-list-tab">
+				<div class="tab-header">Chat [1]</div>
+				<div class="tab-body">
+					<ul class="users-list">
+						<li>
+							<img class="avatar" src="img/avatar.jpg" alt="User Profile Image">
+							<b>Trevor Phillips</b>
+						</li>
+						<li class="active">
+							<img class="avatar" src="img/avatar.jpg" alt="User Profile Image">
+							<b>John Marsh</b>
+						</li>
+						<li class="active">
+							<img class="avatar" src="img/avatar.jpg" alt="User Profile Image">
+							<b>Tommy Vercetti</b>
+						</li>
+					</ul>
+				</div>
+				<div class="tab-footer">
+					<input class="form-control" type="text" placeholder="Search">
+				</div>
+			</li>
+			<li class="tab">
+				<div class="tab-header">Tommy Vercetti</div>
+				<div class="tab-body">
+					<ul class="messages"></ul>
+				</div>
+				<div class="tab-footer">
+					<textarea class="form-control" rows="1"></textarea>
+				</div>
+			</li>
+			<li class="tab active">
+				<div class="tab-header">John Marsh</div>
+				<div class="tab-body">
+					<ul class="messages">
+						<li class="date">Today at 3:15pm</li>
+						<li class="message me clearfix">
+							<img class="avatar" src="img/avatar.jpg" alt="User Profile Image">
+							<div class="bubble">
+								<p>Hello there! If you have any questions then ask them in the comments section.</p>
+								<p>Someone will reply soon</p>
+							</div>
+						</li>
+						<li class="message you clearfix">
+							<img class="avatar" src="img/avatar.jpg" alt="User Profile Image">
+							<div class="bubble"><p>I will try!</p></div>
+						</li>
+						<li class="message me clearfix">
+							<img class="avatar" src="img/avatar.jpg" alt="User Profile Image">
+							<div class="bubble"><p>Sure.</p></div>
+						</li>
+						<li class="message me clearfix">
+							<img class="avatar" src="img/avatar.jpg" alt="User Profile Image">
+							<div class="bubble"><p>Don't forget. I am mostly online!</p></div>
+						</li>
+					</ul>
+					<div class="message-information">
+						Seen at 2:13am
+					</div>
+				</div>
+				<div class="tab-footer">
+					<textarea class="form-control" rows="1"></textarea>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!-- END CHAT -->
+
+	<script src="js/toggler.js"></script>
+</body>
+</html>
